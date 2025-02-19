@@ -19,8 +19,8 @@ Proyek ini adalah sistem absensi sederhana yang menggunakan teknologi pengenalan
 
 1. **Clone Repository**
    ```bash
-   git clone https://github.com/username/repository-name.git
-   cd repository-name
+   git clone https://github.com/Gunturaa/AbsensiFaceRecognition
+   cd AbsensiFaceRecognition
 
    python -m venv venv
    source venv/bin/activate  # Untuk Windows: venv\Scripts\activate
