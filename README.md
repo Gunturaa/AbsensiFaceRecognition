@@ -13,7 +13,7 @@ Proyek ini adalah sistem absensi sederhana yang menggunakan teknologi pengenalan
 - **OpenCV**: Library untuk pengolahan gambar dan video.
 - **Flask**: Framework web untuk membangun antarmuka website.
 - **face_recognition**: Library untuk pengenalan wajah.
-- **SQLite**: Database untuk menyimpan data pengguna dan riwayat absensi.
+- **MySql**: Database untuk menyimpan data pengguna dan riwayat absensi.
 
 ## Instalasi
 
