@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head.html" %}
+    <style>
+      * {
+        box-sizing: border-box;
+        font-family: "Courier New", monospace;
+      }
+
+      body {
+        background-image: url("https://images7.alphacoders.com/135/thumb-1920-1359466.png"); /* Ganti dengan path gambar Anda */
+        background-size: cover; /* Menyesuaikan gambar agar menutupi seluruh latar belakang */
+        background-position: center; /* Posisi gambar di tengah */
+        background-repeat: no-repeat; /* Mencegah pengulangan gambar */
+        background-attachment: fixed; /* Gambar tetap di tempat saat scrolling */
+        color: #00ff00;
+      }
+
+      #myInput {
+        background-color: black;
+        color: #00ff00;
+        border: 1px solid #00ff00;
+        padding: 10px;
+        width: 100%;
+        font-size: 16px;
+      }
+
+      #myTable {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #00ff00;
+        font-size: 18px;
+        background-color: rgba(
+          0,
+          0,
+          0,
+          0.5
+        ); /* Latar belakang hitam transparan */
+      }
+
+      #myTable th,
+      #myTable td {
+        text-align: left;
+        padding: 12px;
+        border: 1px solid #00ff00;
+        color: #00ff00; /* Warna teks hijau */
+      }
+
+      #myTable tr.header,
+      #myTable tr:hover {
+        background-color: rgba(
+          0,
+          255,
+          0,
+          0.2
+        ); /* Efek hover dengan transparansi */
+      }
+
+      .glitch {
+        position: relative;
+        color: #00ff00;
+        font-size: 24px;
+        font-weight: bold;
+        animation: glitch 1s infinite;
+      }
+
+      @keyframes glitch {
+        0% {
+          text-shadow: 2px 2px 5px #ff0000;
+        }
+        50% {
+          text-shadow: -2px -2px 5px #00ffff;
+        }
+        100% {
+          text-shadow: 2px -2px 5px #ff00ff;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    {% include "navbar.html" %}
+
+    <div class="container-fluid">
+      <div class="row mt-5 mb-5">
+        <div class="col-md-8">
+          <img
+            src="{{ url_for('video_feed') }}"
+            width="100%"
+            class="img-thumbnail"
+          />
+        </div>
+        <div class="col-md-4" style="height: 500px; overflow-y: auto">
+          <h3 class="glitch">Today Scan</h3>
+          <input
+            type="text"
+            id="myInput"
+            onkeyup="myFunction()"
+            placeholder="Search for names.."
+          />
+
+          <table id="myTable">
+            <thead>
+              <tr>
+                <th>Person #</th>
+                <th>Name</th>
+                <th>Status</th>
+                <th>Added</th>
+              </tr>
+            </thead>
+            <tbody id="scandata"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        let lastcnt = 0;
+        let cnt;
+        chkNewScan();
+
+        function chkNewScan() {
+          countTodayScan();
+          setTimeout(chkNewScan, 1000);
+        }
+
+        function countTodayScan() {
+          $.ajax({
+            url: "/countTodayScan",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+              cnt = data.rowcount;
+              if (cnt > lastcnt) {
+                reloadTable();
+              }
+
+              lastcnt = cnt;
+            },
+            error: function (result) {
+              console.log("no result!");
+            },
+          });
+        }
+
+        function reloadTable() {
+          $.ajax({
+            url: "/loadData",
+            type: "GET",
+            dataType: "json",
+            success: function (response) {
+              var tr = $("#scandata");
+              tr.empty();
+
+              $.each(response, function (index, item) {
+                if (item.length > 0) {
+                  for (let i = 0; i < item.length; i++) {
+                    tr.append(
+                      "<tr>" +
+                        "<td>" +
+                        item[i][1] +
+                        "</td>" +
+                        "<td>" +
+                        item[i][2] +
+                        "</td>" +
+                        "<td>" +
+                        item[i][3] +
+                        "</td>" +
+                        "<td>" +
+                        item[i][4] +
+                        "</td>" +
+                        "</tr>"
+                    );
+                  }
+                }
+              });
+            },
+            error: function (result) {
+              console.log("no result!");
+            },
+          });
+        }
+      });
+    </script>
+
+    <script>
+      function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("myInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+          td = tr[i].getElementsByTagName("td")[1];
+          if (td) {
+            txtValue = td.textContent || td.innerText;
+            tr[i].style.display =
+              txtValue.toUpperCase().indexOf(filter) > -1 ? "" : "none";
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
