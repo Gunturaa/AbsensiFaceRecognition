@@ -2,67 +2,41 @@
 <html lang="en">
   <head>
     {% include "head.html" %}
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
       * {
         box-sizing: border-box;
-        font-family: "Courier New", monospace;
+        font-family: "Roboto", sans-serif;
       }
 
       body {
-        background-image: url("https://images7.alphacoders.com/135/thumb-1920-1359466.png"); /* Ganti dengan path gambar Anda */
-        background-size: cover; /* Menyesuaikan gambar agar menutupi seluruh latar belakang */
-        background-position: center; /* Posisi gambar di tengah */
-        background-repeat: no-repeat; /* Mencegah pengulangan gambar */
-        background-attachment: fixed; /* Gambar tetap di tempat saat scrolling */
-        color: #00ff00;
+        background-image: url("https://images7.alphacoders.com/135/thumb-1920-1359466.png");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: #333;
+        margin: 0;
+        padding: 0;
       }
 
-      #myInput {
-        background-color: black;
-        color: #00ff00;
-        border: 1px solid #00ff00;
-        padding: 10px;
-        width: 100%;
-        font-size: 16px;
+      .container-fluid {
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       }
 
-      #myTable {
-        border-collapse: collapse;
-        width: 100%;
-        border: 1px solid #00ff00;
-        font-size: 18px;
-        background-color: rgba(
-          0,
-          0,
-          0,
-          0.5
-        ); /* Latar belakang hitam transparan */
-      }
-
-      #myTable th,
-      #myTable td {
-        text-align: left;
-        padding: 12px;
-        border: 1px solid #00ff00;
-        color: #00ff00; /* Warna teks hijau */
-      }
-
-      #myTable tr.header,
-      #myTable tr:hover {
-        background-color: rgba(
-          0,
-          255,
-          0,
-          0.2
-        ); /* Efek hover dengan transparansi */
-      }
-
-      .glitch {
+      h3.glitch {
         position: relative;
-        color: #00ff00;
+        color: #333;
         font-size: 24px;
         font-weight: bold;
         animation: glitch 1s infinite;
+        margin-bottom: 20px;
       }
 
       @keyframes glitch {
@@ -76,13 +50,52 @@
           text-shadow: 2px -2px 5px #ff00ff;
         }
       }
+
+      #myInput {
+        background-color: #f0f0f0;
+        color: #333;
+        border: 1px solid #ccc;
+        padding: 10px;
+        width: 100%;
+        font-size: 16px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      #myTable {
+        border-collapse: collapse;
+        width: 100%;
+        border: 1px solid #ccc;
+        font-size: 18px;
+        background-color: #fff;
+        border-radius: 5px;
+        overflow: hidden;
+      }
+
+      #myTable th,
+      #myTable td {
+        text-align: left;
+        padding: 12px;
+        border: 1px solid #ccc;
+        color: #333;
+      }
+
+      #myTable tr.header,
+      #myTable tr:hover {
+        background-color: #f1f1f1;
+      }
+
+      .img-thumbnail {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
     </style>
   </head>
   <body>
     {% include "navbar.html" %}
 
-    <div class="container-fluid">
-      <div class="row mt-5 mb-5">
+    <div class="container-fluid mt-5 mb-5">
+      <div class="row">
         <div class="col-md-8">
           <img
             src="{{ url_for('video_feed') }}"
@@ -97,11 +110,12 @@
             id="myInput"
             onkeyup="myFunction()"
             placeholder="Search for names.."
+            class="form-control mb-3"
           />
 
-          <table id="myTable">
-            <thead>
-              <tr>
+          <table id="myTable" class="table table-hover">
+            <thead class="thead-light">
+              <tr class="header">
                 <th>Person #</th>
                 <th>Name</th>
                 <th>Status</th>
@@ -115,6 +129,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script type="text/javascript">
       $(document).ready(function () {
         let lastcnt = 0;

@@ -2,13 +2,17 @@
 <html lang="en">
   <head>
     {% include "head.html" %}
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
     <style>
       body {
         background: url("https://images2.alphacoders.com/134/thumb-1920-1344492.jpeg")
           no-repeat center center fixed;
         background-size: cover;
         color: #c9d1d9;
-        font-family: "Courier New", monospace;
+        font-family: "Roboto", sans-serif;
       }
       .container {
         max-width: 1200px;
@@ -16,26 +20,27 @@
       }
       .table {
         width: 100%;
-        background-color: rgba(33, 38, 45, 0.8); /* Transparan */
+        background-color: rgba(255, 255, 255, 0.8); /* Transparan */
         border-radius: 10px;
+        overflow: hidden;
       }
       .navbar {
         border-bottom: 2px solid #58a6ff;
-        background-color: rgba(13, 17, 23, 0.8) !important;
+        background-color: rgba(255, 255, 255, 0.8) !important;
       }
       .card {
-        background-color: rgba(22, 27, 34, 0.8); /* Transparan */
-        border: 1px solid #30363d;
+        background-color: rgba(255, 255, 255, 0.8); /* Transparan */
+        border: 1px solid #ddd;
         transition: transform 0.3s ease-in-out;
       }
       .card:hover {
         transform: scale(1.02);
       }
       .table-dark {
-        background-color: rgba(33, 38, 45, 0.9);
+        background-color: rgba(107, 111, 115, 0.9);
       }
       .table-hover tbody tr:hover {
-        background-color: rgba(48, 54, 61, 0.9);
+        background-color: rgba(120, 125, 130, 0.9);
       }
       .btn {
         transition: all 0.3s ease-in-out;
@@ -45,12 +50,12 @@
       }
       .table td,
       .table th {
-        color: #ffffff;
+        color: #333;
       }
     </style>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
       <div class="container">
         <a href="#" class="navbar-brand d-flex align-items-center">
           <img
@@ -129,5 +134,8 @@
         </div>
       </div>
     </section>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
 </html>

@@ -5,6 +5,7 @@ import mysql.connector
 import cv2
 from PIL import Image
 import numpy as np
+
 import os
 import time
 from datetime import date
@@ -32,7 +33,10 @@ mycursor = mydb.cursor()
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Generate dataset >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 def generate_dataset(nbr):
     face_classifier = cv2.CascadeClassifier(
-        "D:/projekku/FlaskOpencv_FaceRecognition/resources/haarcascade_frontalface_default.xml")
+        "D:/projekku/AbsensiFaceRecognition/resources/haarcascade_frontalface_default.xml")
+
+    if face_classifier.empty():
+        raise IOError("Error loading face cascade classifier. Check the path to the XML file.")
 
     def face_cropped(img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -84,7 +88,7 @@ def generate_dataset(nbr):
 # <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Train Classifier >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 @app.route('/train_classifier/<nbr>')
 def train_classifier(nbr):
-    dataset_dir = "D:/projekku/FlaskOpencv_FaceRecognition/dataset"
+    dataset_dir = "D:/projekku/AbsensiFaceRecognition/dataset"
 
     path = [os.path.join(dataset_dir, f) for f in os.listdir(dataset_dir)]
     faces = []
@@ -179,7 +183,7 @@ def face_recognition():  # generate frame by frame from camera
         return img
 
     faceCascade = cv2.CascadeClassifier(
-        "D:/projekku/FlaskOpencv_FaceRecognition/resources/haarcascade_frontalface_default.xml")
+        "D:/projekku/AbsensiFaceRecognition/resources/haarcascade_frontalface_default.xml")
     clf = cv2.face.LBPHFaceRecognizer_create()
     clf.read("classifier.xml")
 
